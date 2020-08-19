@@ -14,7 +14,7 @@ jobs:
         with:
           python-version: '3.x'
           architecture: 'x64'
-      # - run: python build_subsets.py # <<< the magic happens here
+      # - run: python build_subsets.py # < Add subset script here
       - name: Make a change
         run: |
           CURRENT_DATE=`date +"%Y-%m-%d %T"`
