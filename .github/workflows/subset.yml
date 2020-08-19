@@ -1,0 +1,30 @@
+name: Build subsets
+on:
+  push:
+    branches: [master]
+jobs:
+  build_subsets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+          architecture: 'x64'
+      # - run: python build_subsets.py # <<< the magic happens here
+      - name: Make a change
+        run: |
+          CURRENT_DATE=`date +"%Y-%m-%d %T"`
+          echo ${CURRENT_DATE} >> date.txt
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "Add changes" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
